@@ -1,0 +1,73 @@
+Webpack es el empaquetador de aplicaciones web mas utilizado.
+ 
+Va recuperear todos los modulos y todas las partes de la aplicacion web y va a crear un
+distribuible para darselo al navegador.
+
+Toda aplicacion tiene un punto de entrada. Es el primer archivo donde de importa y ejecuta todo
+lo demas de nuestra aplicacion web.
+
+Por ejemplo en los proyectos hechos hasta ahora el punto de entrada era el index.js
+
+
+Instalar webpack -> npm install --save-dev webpack webpack-cli
+
+
+
+Añadir script en el package.json -> "build": "webpack"
+
+Hay que indicarle el modo en el que estamos trabajando puede ser tanto development, production ...
+
+Para ello el script quedara tal que asi -> "build": "webpack --mode=development"
+
+Por defecto webpack detecta que el punto de entrada de la aplicacion esta en /src/index.js
+
+Al ejecutar el script se crea una carpeta dist con el archivo main.js
+
+Para configurar webpack podemos añadir un archivo en la razi del proyecto llamado webpack.config.js
+
+
+Por defecto Webpack no entiend jsx entonces al empaquetar una app de React necesitamos hacer usar un loader para que lo entienda
+
+Un loader es una herramienta que va a transformar el codigo para que webpack lo entienda y lo pueda transformar a algo que pueda entender el navegador
+
+En este caso necesitamos el loader babel
+
+ instalamos todo lo que necesitamos con -> npm install --save-dev @babel/core babel-loader @babel/preset-react
+
+Hay que configurar el loader en el archivo webpack.config.js
+
+A dia de hoy se considera mala practica hacer un import React from 'react' para ello añadimos una configuracion en el preset
+
+
+Para ver la aplicacion dentro de build podemos añadir un index.html.
+
+servor es una utilidad muy pequeña que te permite servir un index html
+Para servir el html y ver nuestra aplicacion -> npx servor build
+
+Para cargar el archivo css de nuestra aplicacion con webpack importamos los estilos en el punto de entrada pero para que webpack entienda
+el css para ello necesitaremos un loader
+
+Para instalar los loaders de css -> npm install style-loader css-loader --save-dev
+
+Un plugin en webpack lo que hace es añadir una funcionalidad al mismo.
+
+Añadir funcionalidad con un plugin para no tener que crear manualmente un index.html
+Para ello instalamos el plugin -> npm install html-webpack-plugin --save-dev
+Posteriormente debemos añadirlo a la configuracion de webpack
+
+Ahroa al hacer un build nos crea automaticamente un index.html en la carpeta build en el que tenemos los scripts cargados
+
+Para no tener que estar haciendo una build manualmente despues sde cada cambio y cargando el html podemos añadir un script al package.json
+-> "dev": "webpack serve --mode=development"
+
+El webpack serve lo que hace es que cada vez que encuentra un cambio realiza una build aparte que nos carga directamente el index.html
+
+En la configuracion de webpack podemos añadirle configuracion al webpack serve
+
+Cuando tenemos un error en la consola nos indica el error en el codigo que tiene webpack compilado y puede no coincidir con el que tenemos nosotros
+Para solucionar esto se utiliza un sourcemap que tenemos que añadir en la config de webpack
+
+La config de webpack no solo puede ser un objeto tambien puede ser una funcion que devuelva un objeto
+
+Al deployar nuestra aplcacion solo tendremos que añadir nuestra carpeta build que contiene todo lo necesario
+
